@@ -1,5 +1,5 @@
 <div class="text-center rating">
-  <p class="font-weight-bold">Rating: <%= @average_rating %></p>
+  <p class="font-weight-bold">Total Rating: <%= @average_rating %></p>
   <div class="rating-stars">
     <% @average_rating.times do  %>
       <i class="bi bi-star-fill text-warning"></i>
@@ -18,7 +18,7 @@
       <div class="btn-group btn-group-toggle" data-toggle="buttons">
         <% (1..5).each do |value| %>
           <label class="btn btn-outline-warning">
-            <%= form.radio_button :value, value, id: "star#{value}" %>
+            <%= form.radio_button :value, value, id: "star#{value}", :required => 'required' %>
             &#9733;
           </label>
         <% end %>
