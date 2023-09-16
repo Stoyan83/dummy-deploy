@@ -20,6 +20,6 @@ class RatingsController < ApplicationController
   end
 
   def set_average_rating
-    @average_rating = Rating.average_rating
+    @average_rating = Rating.average_rating.presence || 0
   end
 end
