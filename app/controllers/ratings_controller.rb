@@ -1,7 +1,7 @@
 class RatingsController < ApplicationController
   def new
     @rating = Rating.new
-    @average_rating = Rating.average(:value)
+    @average_rating = Rating.average_rating
   end
 
   def create

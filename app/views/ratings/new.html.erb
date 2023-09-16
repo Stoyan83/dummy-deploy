@@ -1,5 +1,15 @@
 <% if @average_rating %>
-  <p>The average rating is: <%= number_with_precision(@average_rating, precision: 2) %></p>
+  <div>
+    <p>The average rating is: <%= @average_rating %></p>
+    <div class="rating-stars">
+      <% @average_rating.times do  %>
+        <i class="bi bi-star-fill"></i>
+      <% end %>
+      <% (5 - @average_rating).times do  %>
+        <i class="bi bi-star"></i>
+      <% end %>
+    </div>
+  </div>
 <% else %>
   <p>No ratings available yet.</p>
 <% end %>
