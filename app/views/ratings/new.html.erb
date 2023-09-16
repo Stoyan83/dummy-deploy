@@ -15,13 +15,15 @@
 <% end %>
 
 <div class="container text-center mt-5">
-  <h1>Rate Something</h1>
+  <h1 class="h3">Give Me Your Rating</h1>
   <%= form_with(model: @rating, url: ratings_path, method: :post) do |form| %>
-    <div class="form-group">
-       <%= form.number_field :value, min: 1, max: 5, class: "form-control-sm" %>
-    </div>
-    <div class="form-group">
-      <%= form.submit "Rate", class: "btn btn-primary" %>
+    <div class="d-flex justify-content-center">
+      <div class="form-group mr-2">
+        <%= form.number_field :value, min: 1, max: 5, class: "form-control form-control-sm" %>
+      </div>
+      <div class="form-group">
+        <%= form.submit "Rate", class: "btn btn-primary btn-sm" %>
+      </div>
     </div>
   <% end %>
 </div>
