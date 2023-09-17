@@ -2,8 +2,6 @@ version: '3'
 services:
   web:
     build: .
-    volumes:
-      - .:/app
     ports:
       - "3000:3000"
     environment:
@@ -14,5 +12,10 @@ services:
 
   db:
     image: nouchka/sqlite3:latest
+    stdin_open: true
+    tty: true
     volumes:
-      - ./db:/app/db
+      - dev-volume:/app/db
+
+volumes:
+  dev-volume:
