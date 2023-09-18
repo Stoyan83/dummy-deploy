@@ -43,8 +43,7 @@ COPY . .
 RUN bundle exec bootsnap precompile --gemfile app/ lib/
 
 # Precompile assets for production without requiring secret RAILS_MASTER_KEY
-RUN SECRET_KEY_BASE=dummy bundle exec rake assets:precompile
-
+RUN SECRET_KEY_BASE="$(cat config/secrets.yml | grep "secret_key_base" | awk '{print $2}')" bundle exec rake assets:precompile
 
 # Entrypoint prepares the database.
 ENTRYPOINT ["./bin/docker-entrypoint"]
