@@ -43,7 +43,7 @@ COPY . .
 RUN bundle exec bootsnap precompile --gemfile app/ lib/
 
 # Precompile assets for production without requiring secret RAILS_MASTER_KEY
-RUN SECRET_KEY_BASE=dummy bundle exec rake assets:precompile
+RUN SECRET_KEY_BASE=dummy RAILS_ENV=production" bundle exec rake assets:precompile
 
 
 # Entrypoint prepares the database.
