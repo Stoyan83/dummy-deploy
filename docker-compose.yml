@@ -11,8 +11,6 @@ services:
       PORT: "3000"
     depends_on:
       - db
-
-
   db:
     image: nouchka/sqlite3:latest
     stdin_open: true

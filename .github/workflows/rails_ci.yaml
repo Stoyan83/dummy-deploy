@@ -34,3 +34,21 @@ jobs:
           bundler-cache: true
       - name: Lint Ruby files
         run: bundle exec rubocop --parallel
+  deploy:
+    needs: [test, lint]
+    name: Deploy to EC2 on master branch push
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Deploy to Server
+        uses: easingthemes/ssh-deploy@main
+    env:
+      SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+      REMOTE_HOST: ${{ secrets.REMOTE_HOST }}
+      REMOTE_USER: ${{ secrets.REMOTE_USER }}
+      TARGET: ${{ secrets.TARGET_DIR }}
+      SCRIPT_AFTER: |
+        whoami
+        ls -al
+        echo $RSYNC_STDOUT
