@@ -34,7 +34,6 @@ jobs:
           bundler-cache: true
       - name: Lint Ruby files
         run: bundle exec rubocop --parallel
-
   deploy:
     needs: [test, lint]
     name: Deploy to EC2 on master branch push
@@ -42,18 +41,17 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
-        env:
-          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
-          REMOTE_HOST: ${{ secrets.REMOTE_HOST }}
-          REMOTE_USER: ${{ secrets.REMOTE_USER }}
-
-      - name: SSH into EC2 and update code
-        run: |
-          echo "$SSH_PRIVATE_KEY" > private_key && chmod 600 private_key.pem
-          ssh -o StrictHostKeyChecking=no -i private_key.pem ec2-user@52.90.87.176 \
-            'cd /home/ec2-user/dummy-deploy &&
-             git pull origin main &&
-             docker-compose down &&
-             docker-compose build &&
-             docker-compose up -d &&
-             exit'
+      - name: Deploy to Server
+        uses: easingthemes/ssh-deploy@main
+    env:
+      SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+      REMOTE_HOST: ${{ secrets.REMOTE_HOST }}
+      REMOTE_USER: ${{ secrets.REMOTE_USER }}
+      TARGET: ${{ secrets.TARGET_DIR }}
+      SCRIPT_BEFORE: |
+          whoami
+          ls -al
+      SCRIPT_AFTER: |
+        whoami
+        ls -al
+        echo $RSYNC_STDOUT
