@@ -58,7 +58,9 @@ jobs:
             echo $RSYNC_STDOUT
       - name: SSH into EC2 and update code
         run: |
-          ssh -i $SSH_PRIVATE_KEY ${{ secrets.REMOTE_USER }}@${{ secrets.REMOTE_HOST }} << EOF
+          echo "$SSH_PRIVATE_KEY" > private_key && chmod 600 private_key
+          ssh -o StrictHostKeyChecking=no -i private_key ${REMOTE_USER}@${REMOTE_HOST} '
+
             cd /home/ec2-user/dummy-deploy
             git pull origin main
             docker-compose down
