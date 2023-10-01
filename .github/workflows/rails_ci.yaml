@@ -49,9 +49,9 @@ jobs:
 
       - name: SSH into EC2 and update code
         run: |
-          echo "$SSH_PRIVATE_KEY" > private_key.pem
-          chmod 600 private_key.pem
-          ssh -i private_key.pem ${REMOTE_USER}@${REMOTE_HOST} \
+          echo "$SSH_PRIVATE_KEY" > private_key
+          chmod 600 private_key
+          ssh -i private_key ${REMOTE_USER}@${REMOTE_HOST} \
             'cd /home/ec2-user/dummy-deploy &&
              git pull origin main &&
              docker-compose down &&
