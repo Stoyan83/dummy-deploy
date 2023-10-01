@@ -55,3 +55,9 @@ jobs:
         whoami
         ls -al
         echo $RSYNC_STDOUT
+         'cd /home/ec2-user/dummy-deploy &&
+             git pull origin main &&
+             docker-compose down &&
+             docker-compose build &&
+             docker-compose up -d &&
+             exit'
