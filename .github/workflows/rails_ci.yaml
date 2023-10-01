@@ -48,15 +48,13 @@ jobs:
           REMOTE_USER: ${{ secrets.REMOTE_USER }}
 
       - name: SSH into EC2 and update code
-
         run: |
-          echo "$SSH_PRIVATE_KEY" > private_key && chmod 600 private_key
-          ssh -o StrictHostKeyChecking=no -i private_key ${REMOTE_USER}@${REMOTE_HOST} '
-
-            cd /home/ec2-user/dummy-deploy
-            git pull origin main
-            docker-compose down
-            docker-compose build
-            docker-compose up -d
-            exit
-              '
+          echo "$SSH_PRIVATE_KEY" > private_key
+          chmod 600 private_key
+          ssh -o StrictHostKeyChecking=no -i private_key ${REMOTE_USER}@${REMOTE_HOST} \
+            'cd /home/ec2-user/dummy-deploy &&
+            git pull origin main &&
+            docker-compose down &&
+            docker-compose build &&
+            docker-compose up -d &&
+            exit'
